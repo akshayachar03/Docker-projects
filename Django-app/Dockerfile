@@ -20,8 +20,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Expose Django default port
+# Expose the application port
 EXPOSE 6000
 
-# Command to run Django server
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:6000"]
+# Start Gunicorn server instead of Django's runserver
+CMD ["gunicorn", "--bind", "0.0.0.0:6000", "myproject.wsgi:application"]
