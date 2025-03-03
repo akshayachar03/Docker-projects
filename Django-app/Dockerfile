@@ -21,7 +21,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose Django default port
-EXPOSE 8000
+EXPOSE 6000
 
 # Command to run Django server
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:6000"]
