@@ -1,9 +1,9 @@
 FROM ubuntu:22.04
 
-# Set environment variables to avoid interactive prompts
+# Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install dependencies
+# Update package lists and install required dependencies
 RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
@@ -17,14 +17,12 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Ensure Gunicorn is installed
-RUN pip3 install gunicorn
-
 # Copy application code
 COPY . .
 
-# Expose the application port
-EXPOSE 6000
+# Expose the Django default port
+EXPOSE 8000
 
-# Start Gunicorn server
-CMD ["gunicorn", "--bind", "0.0.0.0:6000", "myproject.wsgi:application"]
+# Command to run Django server
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
