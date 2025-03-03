@@ -13,9 +13,12 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy and install dependencies
+# Copy requirements file and install dependencies
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Ensure Gunicorn is installed
+RUN pip3 install gunicorn
 
 # Copy application code
 COPY . .
@@ -23,5 +26,5 @@ COPY . .
 # Expose the application port
 EXPOSE 6000
 
-# Start Gunicorn server instead of Django's runserver
+# Start Gunicorn server
 CMD ["gunicorn", "--bind", "0.0.0.0:6000", "myproject.wsgi:application"]
